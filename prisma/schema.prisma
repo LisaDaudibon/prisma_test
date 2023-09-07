@@ -126,6 +126,52 @@ model OLTransfer {
   archetypeId String?
 }
 
+model OracleUser {
+  id            String    @id @default(uuid())
+  name          String
+  email         String?   @unique
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+
+  @@map("oraclesusers")
+}
+
+model Account {
+  id                String   @id @default(cuid())
+  oracleUserId      String   @map("oracle_user_id")
+  type              String?
+  provider          String
+  providerAccountId String   @map("provider_account_id")
+  token_type        String?
+  refresh_token     String?  @db.Text
+  access_token      String?  @db.Text
+  expires_at        Int?
+  scope             String?
+  id_token          String?  @db.Text
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  oracleUser        OracleUser     @relation(fields: [oracleUserId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id            String   @id @default(cuid())
+  oracleUserId  String?  @map("oracle_user_id")
+  sessionToken  String   @unique @map("session_token") @db.Text
+  accessToken   String?  @map("access_token") @db.Text
+  expires       DateTime
+  oracleUser    OracleUser?    @relation(fields: [oracleUserId], references: [id], onDelete: Cascade)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("sessions")
+}
+
 
 model VerificationRequest {
   id         String   @id @default(cuid())
