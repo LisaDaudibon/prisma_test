@@ -6,21 +6,28 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
+model Guild {
+  id      Int    @id @default(autoincrement())
+  name    String @unique
+  members User[] @relation("memberOfGuild")
+}
+
 model User {
-  id        Int    @id @default(autoincrement())
-  name      String @unique
+  id        Int     @id @default(autoincrement())
+  name      String  @unique
+  guilds    Guild[] @relation("memberOfGuild")
   nfts      NFT[]
-  sales     Sale[] @relation("fromUser")
-  purchases Sale[] @relation("toUser")
-  drops     Drop[] @relation("toUser")
-  spent     Float  @default(0)
-  sold      Float  @default(0)
-  balance   Float  @default(0)
+  sales     Sale[]  @relation("fromUser")
+  purchases Sale[]  @relation("toUser")
+  drops     Drop[]  @relation("toUser")
+  spent     Float   @default(0)
+  sold      Float   @default(0)
+  balance   Float   @default(0)
 }
 
 model NFT {
