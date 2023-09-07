@@ -8,5 +8,8 @@ ALTER TABLE "_memberOfGuild" DROP CONSTRAINT "_memberOfGuild_B_fkey";
 DROP TABLE "Guild";
 
 -- DropTable
+DROP TABLE "VerificationRequest";
+
+-- DropTable
 DROP TABLE "_memberOfGuild";
 

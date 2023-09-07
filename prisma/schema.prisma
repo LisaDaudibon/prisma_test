@@ -125,3 +125,15 @@ model OLTransfer {
   OLHistory   OLHistory? @relation(fields: [archetypeId], references: [archetypeId])
   archetypeId String?
 }
+
+
+model VerificationRequest {
+  id         String   @id @default(cuid())
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([identifier, token])
+}
