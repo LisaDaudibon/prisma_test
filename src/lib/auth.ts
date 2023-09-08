@@ -17,7 +17,7 @@ export const authOptions: NextAuthOptions = {
     DiscordProvider({
       clientId: process.env.DISCORD_CLIENT_ID as string,
       clientSecret: process.env.DISCORD_CLIENT_SECRET as string,
-      authorization: { params: { scope: "identify email guilds guilds.members.read " } },
+      authorization: { params: { scope: "identify email guilds guilds.members.read connections" } },
       profile(profile) {
         if (profile.avatar === null) {
             const defaultAvatarNumber = parseInt(profile.discriminator) % 5;
@@ -34,10 +34,11 @@ export const authOptions: NextAuthOptions = {
           global_name: profile.global_name,
           email: profile.email,
           image: profile.image_url,
-          verified: profile.verified,
-          mfa_enabled: profile.mfa_enabled
+          // verified: profile.verified,
+          // mfa_enabled: profile.mfa_enabled
         };
-    }}),
+    }
+  }),
   ],
   callbacks: {
     session: ({ session, token }) => {

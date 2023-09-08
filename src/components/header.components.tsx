@@ -28,11 +28,6 @@ const Header = () => {
                   Login
                 </Link>
               </li>
-              <li>
-                <Link href="/register" className="text-ct-dark-600">
-                  Register
-                </Link>
-              </li>
             </>
           )}
           {user && (
