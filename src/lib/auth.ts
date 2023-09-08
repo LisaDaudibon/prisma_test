@@ -1,10 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-// import { compare } from "bcryptjs";
 import type { NextAuthOptions } from "next-auth";
-// import CredentialsProvider from "next-auth/providers/credentials";
 import DiscordProvider from "next-auth/providers/discord";
-// import GoogleProvider from "next-auth/providers/google";
 
 export const authOptions: NextAuthOptions = {
   // This is a temporary fix for prisma client.
@@ -20,7 +17,25 @@ export const authOptions: NextAuthOptions = {
     DiscordProvider({
       clientId: process.env.DISCORD_CLIENT_ID as string,
       clientSecret: process.env.DISCORD_CLIENT_SECRET as string,
-    }),
+      authorization: { params: { scope: "identify email guilds" } },
+      profile(profile) {
+        if (profile.avatar === null) {
+            const defaultAvatarNumber = parseInt(profile.discriminator) % 5;
+            profile.image_url = `https://cdn.discordapp.com/embed/avatars/${defaultAvatarNumber}.png`;
+        }
+        else {
+            const format = profile.avatar.startsWith("a_") ? "gif" : "png";
+            profile.image_url = `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.${format}`;
+        }
+        return {
+            id: profile.id,
+            // discriminator: profile.discriminator,
+            name: profile.username,
+            email: profile.email,
+            image: profile.image_url,
+
+        };
+    }}),
   ],
   callbacks: {
     session: ({ session, token }) => {
