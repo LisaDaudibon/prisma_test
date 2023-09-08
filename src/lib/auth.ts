@@ -28,12 +28,14 @@ export const authOptions: NextAuthOptions = {
             profile.image_url = `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.${format}`;
         }
         return {
-            id: profile.id,
-            // discriminator: profile.discriminator,
-            name: profile.username,
-            email: profile.email,
-            image: profile.image_url,
-
+          id: profile.id,
+          discriminator: profile.discriminator,
+          name: profile.username,
+          global_name: profile.global_name,
+          email: profile.email,
+          image: profile.image_url,
+          verified: profile.verified,
+          mfa_enabled: profile.mfa_enabled
         };
     }}),
   ],
