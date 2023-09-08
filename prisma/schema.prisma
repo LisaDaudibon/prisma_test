@@ -14,17 +14,17 @@ datasource db {
 model Guild {
   id      Int    @id @default(autoincrement())
   name    String @unique
-  members User[] @relation("memberOfGuild")
+  members Player[] @relation("memberOfGuild")
 }
 
-model User {
+model Player {
   id        Int     @id @default(autoincrement())
   name      String  @unique
   guilds    Guild[] @relation("memberOfGuild")
   nfts      NFT[]
-  sales     Sale[]  @relation("fromUser")
-  purchases Sale[]  @relation("toUser")
-  drops     Drop[]  @relation("toUser")
+  sales     Sale[]  @relation("fromPlayer")
+  purchases Sale[]  @relation("toPlayer")
+  drops     Drop[]  @relation("toPlayer")
   spent     Float   @default(0)
   sold      Float   @default(0)
   balance   Float   @default(0)
@@ -35,7 +35,7 @@ model NFT {
   composedId  String    @unique
   issuedId    Int
   lootDate    DateTime?
-  owner       User?     @relation(fields: [ownerName], references: [name])
+  owner       Player?     @relation(fields: [ownerName], references: [name])
   ownerName   String?
   item        Item?     @relation(fields: [archetypeId], references: [archetypeId])
   archetypeId String?
@@ -86,10 +86,10 @@ model Sale {
   id       Int      @id @default(autoincrement())
   price    Float
   date     DateTime
-  from     User     @relation(fields: [fromUser], references: [name], name: "fromUser")
-  fromUser String
-  to       User     @relation(fields: [toUser], references: [name], name: "toUser")
-  toUser   String
+  from     Player     @relation(fields: [fromPlayer], references: [name], name: "fromPlayer")
+  fromPlayer String
+  to       Player     @relation(fields: [toPlayer], references: [name], name: "toPlayer")
+  toPlayer   String
   nft      NFT?     @relation(fields: [nftId], references: [composedId])
   nftId    String?
 }
@@ -97,8 +97,8 @@ model Sale {
 model Drop {
   id     Int      @id @default(autoincrement())
   date   DateTime
-  to     User     @relation(fields: [toUser], references: [name], name: "toUser")
-  toUser String
+  to     Player     @relation(fields: [toPlayer], references: [name], name: "toPlayer")
+  toPlayer String
   nft    NFT?     @relation(fields: [nftId], references: [id])
   nftId  Int?
 }
@@ -118,30 +118,31 @@ model OLTransfer {
   issuedId    Int
   eventName   String
   price       Float?
-  fromUser    String
-  toUser      String
+  fromPlayer    String
+  toPlayer     String
   date        DateTime?
   processed   Boolean    @default(false)
   OLHistory   OLHistory? @relation(fields: [archetypeId], references: [archetypeId])
   archetypeId String?
 }
 
-model OracleUser {
+model User {
   id            String    @id @default(uuid())
   name          String
   email         String?   @unique
+  emailVerified DateTime? @map("email_verified")
   image         String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   accounts      Account[]
   sessions      Session[]
 
-  @@map("oraclesusers")
+  @@map("users")
 }
 
 model Account {
   id                String   @id @default(cuid())
-  oracleUserId      String   @map("oracle_user_id")
+  userId      String   @map("user_id")
   type              String?
   provider          String
   providerAccountId String   @map("provider_account_id")
@@ -153,7 +154,7 @@ model Account {
   id_token          String?  @db.Text
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
-  oracleUser        OracleUser     @relation(fields: [oracleUserId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@map("accounts")
@@ -161,11 +162,11 @@ model Account {
 
 model Session {
   id            String   @id @default(cuid())
-  oracleUserId  String?  @map("oracle_user_id")
+  userId        String?  @map("user_id")
   sessionToken  String   @unique @map("session_token") @db.Text
   accessToken   String?  @map("access_token") @db.Text
   expires       DateTime
-  oracleUser    OracleUser?    @relation(fields: [oracleUserId], references: [id], onDelete: Cascade)
+  user          User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
