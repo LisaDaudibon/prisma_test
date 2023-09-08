@@ -17,7 +17,7 @@ export const authOptions: NextAuthOptions = {
     DiscordProvider({
       clientId: process.env.DISCORD_CLIENT_ID as string,
       clientSecret: process.env.DISCORD_CLIENT_SECRET as string,
-      authorization: { params: { scope: "identify email guilds" } },
+      authorization: { params: { scope: "identify email guilds guilds.members.read " } },
       profile(profile) {
         if (profile.avatar === null) {
             const defaultAvatarNumber = parseInt(profile.discriminator) % 5;
