@@ -29,6 +29,7 @@ export default async function Profile() {
                 </div>
                 <div className="mt-8">
                   <p className="mb-3">Name: {user.name}</p>
+                  <p className="mb-3">Name: {user.name}</p>
                   <p className="mb-3">Global Name: {user.global_username}</p>
                   <p className="mb-3">Email: {user.email}</p>
                   <p className="mb-3">Discriminator: {user.discriminator}</p>
