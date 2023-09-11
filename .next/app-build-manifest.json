@@ -1,25 +1,49 @@
 {
   "pages": {
-    "/login/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/login/page.js"
+    "/page": [
+      "static/chunks/webpack-83b4ae2fab10d153.js",
+      "static/chunks/fd9d1056-a99b58d3cc150217.js",
+      "static/chunks/596-c294a7d39d9fe754.js",
+      "static/chunks/main-app-665b00aa692004cd.js",
+      "static/chunks/749-efb272bc95870111.js",
+      "static/chunks/396-a5b7cf2b56942beb.js",
+      "static/chunks/app/page-aaf3edd03d077569.js"
     ],
     "/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/layout.css",
-      "static/chunks/app/layout.js"
+      "static/chunks/webpack-83b4ae2fab10d153.js",
+      "static/chunks/fd9d1056-a99b58d3cc150217.js",
+      "static/chunks/596-c294a7d39d9fe754.js",
+      "static/chunks/main-app-665b00aa692004cd.js",
+      "static/chunks/749-efb272bc95870111.js",
+      "static/css/1313100e9a371103.css",
+      "static/chunks/app/layout-44ed03efc84c3636.js"
     ],
-    "/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/page.js"
+    "/login/page": [
+      "static/chunks/webpack-83b4ae2fab10d153.js",
+      "static/chunks/fd9d1056-a99b58d3cc150217.js",
+      "static/chunks/596-c294a7d39d9fe754.js",
+      "static/chunks/main-app-665b00aa692004cd.js",
+      "static/chunks/749-efb272bc95870111.js",
+      "static/chunks/396-a5b7cf2b56942beb.js",
+      "static/chunks/app/login/page-ccf6792d2cd077a3.js"
     ],
     "/openloot/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/openloot/page.js"
+      "static/chunks/webpack-83b4ae2fab10d153.js",
+      "static/chunks/fd9d1056-a99b58d3cc150217.js",
+      "static/chunks/596-c294a7d39d9fe754.js",
+      "static/chunks/main-app-665b00aa692004cd.js",
+      "static/chunks/749-efb272bc95870111.js",
+      "static/chunks/396-a5b7cf2b56942beb.js",
+      "static/chunks/app/openloot/page-7612b7f2f007bac4.js"
+    ],
+    "/profile/page": [
+      "static/chunks/webpack-83b4ae2fab10d153.js",
+      "static/chunks/fd9d1056-a99b58d3cc150217.js",
+      "static/chunks/596-c294a7d39d9fe754.js",
+      "static/chunks/main-app-665b00aa692004cd.js",
+      "static/chunks/749-efb272bc95870111.js",
+      "static/chunks/396-a5b7cf2b56942beb.js",
+      "static/chunks/app/profile/page-9e5b12476fea432f.js"
     ]
   }
 }
