@@ -1,4 +1,8 @@
 {
+  "/page": "app/page.js",
+  "/login/page": "app/login/page.js",
   "/openloot/page": "app/openloot/page.js",
+  "/profile/page": "app/profile/page.js",
+  "/api/session/route": "app/api/session/route.js",
   "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js"
 }
