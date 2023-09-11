@@ -9,6 +9,17 @@ declare module 'next-auth/jwt' {
     mfa_enabled: boolean
     banner: string
     playerName: string
+    // discordGuild: DiscordGuild[]
+  }
+  interface DiscordGuild {
+    discordGuildName: string
+    icon: string
+    owner_id: string
+    approximate_number_count: integer
+    approximate_presence_count: integer
+    description: string
+    guildName: string
+    // jwt: JWT[]
   }
 }
 
@@ -21,6 +32,7 @@ declare module 'next-auth' {
       mfa_enabled: boolean
       banner: string
       playerName: string
+      // discordGuild: DiscordGuild[]
     } & DefaultSession['user']
   }
 
@@ -31,5 +43,16 @@ declare module 'next-auth' {
     mfa_enabled: boolean
     banner: string
     playerName: string
+    // discordGuild: DiscordGuild[]
+  }
+  interface DiscordGuild {
+    discordGuildName: string
+    icon: string
+    owner_id: string
+    approximate_number_count: integer
+    approximate_presence_count: integer
+    description: string
+    guildName: string
+    // user: User[]
   }
 }
