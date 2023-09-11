@@ -16,13 +16,13 @@ export const LoginForm = () => {
         onClick={() => signIn("discord", { callbackUrl })}
         role="button"
       >
-        <img
+        {/* <img
           className="pr-2"
           src="/images/google.svg"
           alt=""
           style={{ height: "2rem" }}
-        />
-        Continue with Google
+        /> */}
+        Continue with Discord
       </a>
   );
 };
