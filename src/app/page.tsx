@@ -7,7 +7,7 @@ export default async function Home() {
       <section className="bg-ct-blue-600 min-h-screen pt-20">
         <div className="max-w-4xl mx-auto bg-ct-dark-100 rounded-md h-[20rem] flex justify-center items-center">
           <p className="text-3xl font-semibold">
-            Welcome to NextAuth with Prisma ORM and Next.js 13
+            Une petite application de test pour voir comment se passe la connection avec Next-Auth !
           </p>
         </div>
       </section>
