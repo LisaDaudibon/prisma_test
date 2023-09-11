@@ -5,6 +5,7 @@ import { authOptions } from "@/lib/auth";
 export default async function Profile() {
   const session = await getServerSession(authOptions);
   const user = session?.user;
+  // console.log(session?.user)
 
   return (
     <>
@@ -28,10 +29,16 @@ export default async function Profile() {
                 </div>
                 <div className="mt-8">
                   <p className="mb-3">Name: {user.name}</p>
-                  {/* <p className="mb-3">Global Name: {user.global_username}</p> */}
+                  <p className="mb-3">Global Name: {user.global_username}</p>
                   <p className="mb-3">Email: {user.email}</p>
-                  {/* <p className="mb-3">Discriminator: {user.discriminator}</p> */}
-                  {/* <p className="mb-3">Authentification à deux facteur: {user.mfa_enabled}</p> */}
+                  <p className="mb-3">Discriminator: {user.discriminator}</p>
+                  <p className="mb-3">
+                    Utilisateur vérifié: {user.verified ? 'True' : 'False'}
+                  </p>
+                  <p className="mb-3">
+                    Double authentification activée: {user.mfa_enabled ? 'True' : 'False'}
+                  </p>
+                  <p className="mb-3">Banner: {user.banner}</p>
                 </div>
               </div>
             )}
