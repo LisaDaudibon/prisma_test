@@ -14,7 +14,7 @@ export default async function Profile() {
         <div className="max-w-4xl mx-auto bg-ct-dark-100 rounded-md h-[20rem] flex justify-center items-center">
           <div>
             <p className="mb-3 text-5xl text-center font-semibold">
-              Profile Page
+              Profile Page New
             </p>
             {!user ? (
               <p>Loading...</p>
