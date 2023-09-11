@@ -38,7 +38,11 @@ export default async function Profile() {
                   <p className="mb-3">
                     Double authentification activée: {user.mfa_enabled ? 'True' : 'False'}
                   </p>
-                  <p className="mb-3">Banner: {user.banner}</p>
+                  <img
+                    src={user.banner ? user.banner : "/images/default.png"}
+                    className="max-h-36"
+                    alt={`profile photo of ${user.name}`}
+                  />
                 </div>
               </div>
             )}
