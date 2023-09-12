@@ -1,8 +1,0 @@
-{
-  "/page": "/",
-  "/login/page": "/login",
-  "/openloot/page": "/openloot",
-  "/profile/page": "/profile",
-  "/api/session/route": "/api/session",
-  "/api/auth/[...nextauth]/route": "/api/auth/[...nextauth]"
-}
