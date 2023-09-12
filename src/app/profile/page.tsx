@@ -5,7 +5,7 @@ import { authOptions } from "@/lib/auth";
 export default async function Profile() {
   const session = await getServerSession(authOptions);
   const user = session?.user;
-  // console.log(session?.user)
+  // console.log(session?.user.banner)
 
   return (
     <>
@@ -26,11 +26,17 @@ export default async function Profile() {
                     className="max-h-36"
                     alt={`profile photo of ${user.name}`}
                   />
+                  {user.banner ? (
+                    <img
+                      src={user.banner}
+                      className="max-h-36"
+                      alt={`banner image of ${user.name}`}
+                    />
+                  ) : null}
                 </div>
                 <div className="mt-8">
-                  <p className="mb-3">Name: {user.name}</p>
-                  <p className="mb-3">Name: {user.name}</p>
-                  <p className="mb-3">Global Name: {user.global_username}</p>
+                  <p className="mb-3">Discord Pseudo: {user.name}</p>
+                  <p className="mb-3">Name: {user.global_name}</p>
                   <p className="mb-3">Email: {user.email}</p>
                   <p className="mb-3">Discriminator: {user.discriminator}</p>
                   <p className="mb-3">
@@ -39,11 +45,6 @@ export default async function Profile() {
                   <p className="mb-3">
                     Double authentification activée: {user.mfa_enabled ? 'True' : 'False'}
                   </p>
-                  <img
-                    src={user.banner ? user.banner : "/images/default.png"}
-                    className="max-h-36"
-                    alt={`profile photo of ${user.name}`}
-                  />
                 </div>
               </div>
             )}

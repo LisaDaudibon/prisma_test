@@ -2,6 +2,8 @@ import { prisma } from "@/lib/prisma";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import type { NextAuthOptions } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
+import type { NextApiRequest, NextApiResponse } from "next"
+import NextAuth from "next-auth"
 
 export const authOptions: NextAuthOptions = {
   // This is a temporary fix for prisma client.
@@ -19,7 +21,7 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.DISCORD_CLIENT_ID as string,
       clientSecret: process.env.DISCORD_CLIENT_SECRET as string,
       authorization: { params: { scope: "identify email guilds guilds.members.read connections" } },
-      // connection: "https://discord.com/api/users/@me/connections",
+
       profile(profile) {
         console.log("Received Profile:", profile)
         if (profile.avatar === null) {
@@ -33,7 +35,7 @@ export const authOptions: NextAuthOptions = {
           id: profile.id as string,
           name: profile.username as string,
           discriminator: profile.discriminator as string, // Fixed typo
-          global_username: profile.global_username as string,
+          global_name: profile.global_name as string,
           verified: profile.verified as boolean,
           mfa_enabled: profile.mfa_enabled as boolean,
           banner: profile.banner as string,
@@ -55,7 +57,7 @@ export const authOptions: NextAuthOptions = {
           ...session.user,
           id: token.id,
           discriminator: token.discriminator,
-          global_username: token.global_username,
+          global_name: token.global_name,
           verified: token.verified,
           mfa_enabled: token.mfa_enabled,
           banner: token.banner,
@@ -70,7 +72,7 @@ export const authOptions: NextAuthOptions = {
           ...token,
           id: u.id,
           discriminator: u.discriminator,
-          global_username: u.global_username,
+          global_name: u.global_name,
           verified: u.verified,
           mfa_enabled: u.mfa_enabled,
           banner: u.banner,
