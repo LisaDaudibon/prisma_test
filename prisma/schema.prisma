@@ -134,7 +134,7 @@ model User {
   emailVerified    DateTime? @map("email_verified")
   image            String?
   discriminator    String? @default("absent")
-  global_username  String?
+  global_name      String?
   verified         Boolean? @default(false)
   mfa_enabled      Boolean? @default(false)
   banner           String?
@@ -144,7 +144,7 @@ model User {
   sessions         Session[]
   player           Player? @relation (fields:[playerName], references: [name])
   playerName       String? @unique
-  discordGuild     DiscordGuild[]
+  // discordGuild     DiscordGuild[]
   // roles            Role[]
   // activity         Activity[]
 
@@ -207,7 +207,7 @@ model DiscordGuild{
   description                     String?
   createdAt                       DateTime
   updatedAt                       DateTime
-  user                            User[]
+  // user                            User[]
   role                            Role[]
   guild                           Guild? @relation( fields: [guildName], references: [name])
 }
