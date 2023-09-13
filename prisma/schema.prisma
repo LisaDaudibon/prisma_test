@@ -144,7 +144,7 @@ model User {
   sessions         Session[]
   player           Player? @relation (fields:[playerName], references: [name])
   playerName       String? @unique
-  // discordGuild     DiscordGuild[]
+  discordGuild     DiscordGuild[]
   // roles            Role[]
   // activity         Activity[]
 
@@ -198,28 +198,32 @@ model VerificationRequest {
 
 model DiscordGuild{
   id                              Int   @id @default(autoincrement())
-  discordGuildName                String @unique
+  discordGuildName                String   @unique
   guildName                       String?  @unique
   icon                            String?
   ownerId                         String?
   approximate_number_count        Int
   approximate_presence_count      Int
   description                     String?
-  createdAt                       DateTime
-  updatedAt                       DateTime
-  // user                            User[]
+  createdAt                       DateTime @default(now())
+  updatedAt                       DateTime @updatedAt
+  user                            User[]
   role                            Role[]
   guild                           Guild? @relation( fields: [guildName], references: [name])
+
+  @@map("discord_guilds")
 }
 
 model Role{
   id                  Int   @id @default(autoincrement())
   roleName            String @unique
   discordGuildName    String @unique
-  createdAt           DateTime
-  updatedAt           DateTime
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
   discordGuild        DiscordGuild @relation(fields: [discordGuildName], references: [discordGuildName])
   // user                User[]
+
+  @@map("roles")
 }
 
 model Activity {
@@ -229,5 +233,9 @@ model Activity {
   state         String
   details       String
   show_activity Boolean
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
   // userName      User[]
+
+  @@map("activities")
 }
