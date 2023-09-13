@@ -5,7 +5,7 @@ import { authOptions } from "@/lib/auth";
 export default async function Profile() {
   const session = await getServerSession(authOptions);
   const user = session?.user;
-  // console.log(session?.user.banner)
+  // console.log(session?.user)
 
   return (
     <>
