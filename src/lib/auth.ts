@@ -7,8 +7,6 @@ import DiscordProvider from "next-auth/providers/discord";
 
 
 export const authOptions: NextAuthOptions = {
-  // This is a temporary fix for prisma client.
-  // @see https://github.com/prisma/prisma/issues/16117
   adapter: PrismaAdapter(prisma),
   pages: {
     signIn: "/login",
@@ -43,18 +41,13 @@ export const authOptions: NextAuthOptions = {
           email: profile.email as string,
           image: profile.image_url as string,
           playerName: profile.playerName as string,
-          discordGuild: profile.discordGuild
+          access_token: profile.access_token as string,
         };
       },
     }),
   ],
   callbacks: {
-    // async redirect({ baseUrl }) {
-    //   return `${baseUrl}/openloot`
-    // },
     session: ({ session, token }) => {
-      console.log("session", session)
-      // console.log("token session", token)
       return {
         ...session,
         user: {
@@ -66,30 +59,15 @@ export const authOptions: NextAuthOptions = {
           mfa_enabled: token.mfa_enabled,
           banner: token.banner,
           playerName: token.playerName,
-          discordGuild: token.discordGuild,
-
+          access_token: token.access_token
         },
       };
     },
     jwt: async ({ token, user, account }) => {
-      if (account?.access_token) {
-        const guildsResponse = await fetch("https://discord.com/api/users/@me/guilds", {
-          headers: {
-            Authorization: `Bearer ${account.access_token}`, // Utilisez le jeton OAuth correct
-          },
-        });
-
-        if (guildsResponse.ok) {
-          const guildsData = await guildsResponse.json();
-          token.discordGuilds = guildsData;
-
-          // console.log(guildsData)
-        }
-      }
-
       if (user) {
         const u = user as unknown as any;
-        // const g = guild as unknown as any;
+        const a = account as unknown as any;
+
         return {
           ...token,
           id: u.id,
@@ -99,39 +77,10 @@ export const authOptions: NextAuthOptions = {
           mfa_enabled: u.mfa_enabled,
           banner: u.banner,
           playerName: u.playerName,
-          // discordId: u.DiscordGuilds.id,
-          // discordName: u.DiscordGuilds.name,
-          // discordId: discordGuild.id
+          access_token: a.access_token
         };
       }
-      // console.log("token", token)
-      // console.log("user jwt", guildsData)
       return token;
     },
   },
-  events: {
-    signIn: async ({ user }) => {
-      console.log(user)
-      if (user.discordGuild) {
-        await Promise.all(
-          user.discordGuild.map(async (guild) => {
-            await prisma.discordGuild.create({
-              data: {
-                discordGuildName: guild.discordGuildName, // ou autre logique pour déterminer ce champ
-                icon: guild.icon,
-                ownerId: guild.owner_id,
-                approximate_number_count: guild.approximate_number_count,
-                approximate_presence_count: guild.approximate_presence_count,
-                description: guild.description,
-                createdAt: new Date(),
-                updatedAt: new Date(),
-              },
-            });
-          })
-        );
-      }
-      console.log("user", user)
-
-    },
-  },
-};
+}
