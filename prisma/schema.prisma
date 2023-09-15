@@ -15,6 +15,7 @@ datasource db {
 model Guild {
   id             Int    @id @default(autoincrement())
   name           String @unique
+  discordUrl     String @unique
   members        Player[] @relation("memberOfGuild")
   discordGuild   DiscordGuild?
 }
@@ -199,12 +200,13 @@ model VerificationRequest {
 
 model DiscordGuild{
   id                              Int   @id @default(autoincrement())
+  discordGuildId                  String   @unique
   discordGuildName                String   @unique
   guildName                       String?  @unique
   icon                            String?
   ownerId                         String?
-  approximate_number_count        Int
-  approximate_presence_count      Int
+  approximate_number_count        Int?
+  approximate_presence_count      Int?
   description                     String?
   createdAt                       DateTime @default(now())
   updatedAt                       DateTime @updatedAt

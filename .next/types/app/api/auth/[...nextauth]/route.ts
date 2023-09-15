@@ -1,8 +1,8 @@
-// File: /home/lisa/THP/Perso/Exos/prisma/src/app/api/session/route.ts
-import * as entry from '../../../../../src/app/api/session/route.js'
+// File: /home/lisa/THP/Perso/Exos/prisma/src/app/api/auth/[...nextauth]/route.ts
+import * as entry from '../../../../../../src/app/api/auth/[...nextauth]/route.js'
 import type { NextRequest } from 'next/server.js'
 
-type TEntry = typeof import('../../../../../src/app/api/session/route.js')
+type TEntry = typeof import('../../../../../../src/app/api/auth/[...nextauth]/route.js')
 
 // Check that the entry is a valid entry
 checkFields<Diff<{
