@@ -3,6 +3,7 @@ import Header from "@/components/header.components";
 import { authOptions } from "@/lib/auth";
 import { updateDiscordData } from "../api/discord/fetch_discord";
 
+
 export default async function Profile() {
   const session = await getServerSession(authOptions);
   const user = session?.user;
