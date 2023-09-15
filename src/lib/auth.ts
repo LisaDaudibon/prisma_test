@@ -54,7 +54,7 @@ export const authOptions: NextAuthOptions = {
     // },
     session: ({ session, token }) => {
       console.log("session", session)
-      console.log("token session", token)
+      // console.log("token session", token)
       return {
         ...session,
         user: {
