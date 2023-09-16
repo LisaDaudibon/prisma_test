@@ -147,7 +147,6 @@ model User {
   player           Player? @relation (fields:[playerName], references: [name])
   playerName       String? @unique
   discordGuild     DiscordGuild[]
-  roles            Role[]
   activity         Activity[]
 
   @@map("users")
@@ -211,31 +210,20 @@ model DiscordGuild{
   createdAt                       DateTime @default(now())
   updatedAt                       DateTime @updatedAt
   user                            User[]
-  role                            Role[]
   guild                           Guild? @relation( fields: [guildName], references: [name])
 
   @@map("discord_guilds")
 }
 
-model Role{
-  id                  Int   @id @default(autoincrement())
-  roleName            String @unique
-  discordGuildName    String @unique
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
-  discordGuild        DiscordGuild @relation(fields: [discordGuildName], references: [discordGuildName])
-  user                User[]
-
-  @@map("roles")
-}
-
 model Activity {
-  id            Int   @id @default(autoincrement())
+  id            Int      @id @default(autoincrement())
   applicationId Int
-  activityName  String @unique
-  state         String
-  details       String
-  show_activity Boolean
+  activityName  String   @unique
+  type          String
+  revoked       Boolean? @default(false)
+  verified      Boolean  @default(false)
+  showActivity  Boolean  @default(false)
+  twoWayLink    Boolean  @default(false)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   userName      User[]
