@@ -147,8 +147,8 @@ model User {
   player           Player? @relation (fields:[playerName], references: [name])
   playerName       String? @unique
   discordGuild     DiscordGuild[]
-  // roles            Role[]
-  // activity         Activity[]
+  roles            Role[]
+  activity         Activity[]
 
   @@map("users")
 }
@@ -224,7 +224,7 @@ model Role{
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
   discordGuild        DiscordGuild @relation(fields: [discordGuildName], references: [discordGuildName])
-  // user                User[]
+  user                User[]
 
   @@map("roles")
 }
@@ -238,7 +238,7 @@ model Activity {
   show_activity Boolean
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-  // userName      User[]
+  userName      User[]
 
   @@map("activities")
 }
