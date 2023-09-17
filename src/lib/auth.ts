@@ -22,7 +22,6 @@ export const authOptions: NextAuthOptions = {
       authorization: { params: { scope: "identify email guilds guilds.members.read connections" } },
 
       profile(profile) {
-        console.log("Received Profile:", profile)
         if (profile.avatar === null) {
           const defaultAvatarNumber = parseInt(profile.discriminator) % 5;
           profile.image_url = `https://cdn.discordapp.com/embed/avatars/${defaultAvatarNumber}.png`;
@@ -64,6 +63,27 @@ export const authOptions: NextAuthOptions = {
       };
     },
     jwt: async ({ token, user, account }) => {
+      // let activitiesData;
+
+      // if (account?.access_token) {
+      //   const activitiesResponse = await fetch("https://discord.com/api/users/@me/connections", {
+      //     headers: {
+      //       Authorization: `Bearer ${account.access_token}`, // Utilisez le jeton OAuth correct
+      //     },
+      //   });
+
+      //   console.log("Activities response:", activitiesResponse);
+
+      //   if (activitiesResponse.ok) {
+      //     const activitiesData = await activitiesResponse.json();
+      //     console.log("Activities data:", activitiesData);
+
+      //     token.discordActivities = activitiesData;
+      //   } else {
+      //     console.log("No response or error:", activitiesResponse.statusText);
+      //   }
+      // }
+
       if (user) {
         const u = user as unknown as any;
         const a = account as unknown as any;
