@@ -130,22 +130,22 @@ model OLTransfer {
 }
 
 model User {
-  id               String   @id @default(cuid())
+  id               String      @id @default(cuid())
   name             String
-  email            String?   @unique
-  emailVerified    DateTime? @map("email_verified")
+  email            String?     @unique
+  emailVerified    DateTime?   @map("email_verified")
   image            String?
-  discriminator    String? @default("absent")
-  global_name      String?
-  verified         Boolean? @default(false)
-  mfa_enabled      Boolean? @default(false)
+  discriminator    String?
+  global_name      String?     @unique @default("empty")
+  verified         Boolean?    @default(false)
+  mfa_enabled      Boolean?    @default(false)
   banner           String?
-  createdAt        DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
   accounts         Account[]
   sessions         Session[]
-  player           Player? @relation (fields:[playerName], references: [name])
-  playerName       String? @unique
+  player           Player?     @relation (fields:[playerName], references: [name])
+  playerName       String?     @unique
   discordGuild     DiscordGuild[]
   activity         Activity[]
 
@@ -216,25 +216,28 @@ model DiscordGuild{
 }
 
 model Activity {
-  id                     Int      @id @default(autoincrement())
-  accountConnectionId    String   @unique
-  activityName           String   @unique
-  revoked                Boolean? @default(false)
-  verified               Boolean  @default(false)
-  showActivity           Boolean  @default(false) @map("show_activity")
-  friendSync             Boolean  @default(false) @map("friend_sync")
-  twoWayLink             Boolean  @default(false) @map("two_way_link")
+  id                     Int         @id @default(autoincrement())
+  accountConnectionId    String      @unique
+  activityName           String      @unique
+  revoked                Boolean?    @default(false)
+  verified               Boolean     @default(false)
+  showActivity           Boolean     @default(false) @map("show_activity")
+  friendSync             Boolean     @default(false) @map("friend_sync")
+  twoWayLink             Boolean     @default(false) @map("two_way_link")
   typeName               String
-  createdAt              DateTime @default(now())
-  updatedAt              DateTime @updatedAt
-  userName               User[]
-  type                   Type @relation( fields: [typeName], references: [name])
+  userGlobalName         String      @map("user_global_name")
+  createdAt              DateTime    @default(now())
+  updatedAt              DateTime    @updatedAt
+  user                   User        @relation( fields: [userGlobalName], references: [global_name])
+  type                   Type        @relation( fields: [typeName], references: [name])
 
   @@map("activities")
 }
 
 model Type {
-  id        Int    @id @default(autoincrement())
-  name      String @unique
+  id        Int        @id @default(autoincrement())
+  name      String     @unique @default("empty")
   activity  Activity[]
+
+  @@map("types")
 }
