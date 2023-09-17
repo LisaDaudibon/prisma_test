@@ -216,17 +216,25 @@ model DiscordGuild{
 }
 
 model Activity {
-  id            Int      @id @default(autoincrement())
-  applicationId Int
-  activityName  String   @unique
-  type          String
-  revoked       Boolean? @default(false)
-  verified      Boolean  @default(false)
-  showActivity  Boolean  @default(false)
-  twoWayLink    Boolean  @default(false)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  userName      User[]
+  id                     Int      @id @default(autoincrement())
+  accountConnectionId    String   @unique
+  activityName           String   @unique
+  revoked                Boolean? @default(false)
+  verified               Boolean  @default(false)
+  showActivity           Boolean  @default(false) @map("show_activity")
+  friendSync             Boolean  @default(false) @map("friend_sync")
+  twoWayLink             Boolean  @default(false) @map("two_way_link")
+  typeName               String
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+  userName               User[]
+  type                   Type @relation( fields: [typeName], references: [name])
 
   @@map("activities")
+}
+
+model Type {
+  id        Int    @id @default(autoincrement())
+  name      String @unique
+  activity  Activity[]
 }

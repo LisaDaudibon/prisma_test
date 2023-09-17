@@ -8,14 +8,14 @@ export default async function Profile() {
   const user = session?.user;
 
   // Update Discord data
-  if (user && typeof user.access_token === 'string') {
-    try {
-      await updateDiscordData(user.access_token);
-    } catch (error) {
-      console.error('Error updating Discord data:', error);
-      // Handle <error></error>
-    }
-  }
+  // if (user && typeof user.access_token === 'string') {
+  //   try {
+  //     await updateDiscordData(user.access_token);
+  //   } catch (error) {
+  //     console.error('Error updating Discord data:', error);
+  //     // Handle <error></error>
+  //   }
+  // }
 
   return (
     <>
