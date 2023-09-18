@@ -2,7 +2,7 @@ import { prisma } from '@/lib/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
-export async function updateDiscordData(session: any) {
+export async function updateGuildData(session: any) {
   try {
     const session = await getServerSession(authOptions)
     const session_access_token = session?.user.access_token 
@@ -24,7 +24,7 @@ export async function updateDiscordData(session: any) {
    const guildsData = await guildsResponse.json();
 
    await Promise.all(
-    guildsData.map(async (guild: any) => { 
+    guildsData.map(async (guild: any) => {
       await prisma.discordGuild.upsert({
         where: {
           discordGuildName: guild.name,

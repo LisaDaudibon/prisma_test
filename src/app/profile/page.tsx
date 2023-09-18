@@ -1,7 +1,8 @@
 import { getServerSession } from "next-auth";
 import Header from "@/components/header.components";
 import { authOptions } from "@/lib/auth";
-import { updateDiscordData } from "../api/discord/fetchDiscordGuildFromUser";
+import { updateGuildData } from "../api/discord/fetchDiscordGuildFromUser";
+import { updateActivityData } from "../api/discord/fetchActivityFromUser";
 
 export default async function Profile() {
   const session = await getServerSession(authOptions);
@@ -10,7 +11,8 @@ export default async function Profile() {
   // Update Discord data
   // if (user && typeof user.access_token === 'string') {
   //   try {
-  //     await updateDiscordData(user.access_token);
+  //     await updateGuildData(user.access_token);
+  //     await updateActivityData(user.access_token);
   //   } catch (error) {
   //     console.error('Error updating Discord data:', error);
   //     // Handle <error></error>
