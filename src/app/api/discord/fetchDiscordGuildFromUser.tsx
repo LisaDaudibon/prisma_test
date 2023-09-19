@@ -25,7 +25,8 @@ export async function updateGuildData(session: any) {
 
    await Promise.all(
     guildsData.map(async (guild: any) => {
-      await prisma.discordGuild.upsert({
+      // Upsert the DiscordGuild
+      const discordGuild = await prisma.discordGuild.upsert({
         where: {
           discordGuildName: guild.name,
         },
@@ -41,14 +42,25 @@ export async function updateGuildData(session: any) {
           ownerId: guild.owner_id,
           approximate_number_count: guild.approximate_member_count,
           approximate_presence_count: guild.approximate_presence_count,
-          description: guild.description, 
+          description: guild.description,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
       });
-    })
-   );
 
+      // Link the DiscordGuild to the User
+      if (session?.user.global_name) {
+        await prisma.user.update({
+          where: { global_name: session.user.global_name },
+          data: {
+            discordGuild: {
+              connect: { discordGuildName: discordGuild.discordGuildName },
+            },
+          },
+        });
+      }
+    })
+  );
   console.log('Guild data updated successfully');
     return { success: true, message: 'Discord data updated successfully' };
   } catch (error) {
