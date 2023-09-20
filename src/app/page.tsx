@@ -1,6 +1,7 @@
 import Header from "@/components/header.components";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 export default async function Home() {
   // const session = getServerSession(context.req, context.res, authOptions)
@@ -14,6 +15,8 @@ export default async function Home() {
           <p className="text-3xl font-semibold">
 
             Une petite application de test pour voir comment se passe la connection avec Next-Auth !
+            <ConnectButton />;
+
           </p>
         </div>
       </section>

@@ -132,7 +132,7 @@ model OLTransfer {
 
 model User {
   id               String      @id @default(cuid())
-  name             String
+  name             String?
   email            String?     @unique
   emailVerified    DateTime?   @map("email_verified")
   image            String?
@@ -141,6 +141,7 @@ model User {
   verified         Boolean?    @default(false)
   mfa_enabled      Boolean?    @default(false)
   banner           String?
+  publicAddress    String?     @unique // Added to enable crypto authentication
   createdAt        DateTime    @default(now())
   updatedAt        DateTime    @updatedAt
   accounts         Account[]
@@ -149,6 +150,7 @@ model User {
   playerName       String?     @unique
   discordGuild     DiscordGuild[]
   activity         Activity[]
+  cryptoLoginNonce CryptoLoginNonce?
 
   @@map("users")
 }
@@ -240,4 +242,11 @@ model Type {
   activity  Activity[]
 
   @@map("types")
+}
+
+model CryptoLoginNonce {
+  userId  String   @unique
+  nonce   String
+  expires DateTime
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
