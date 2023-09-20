@@ -1,6 +1,5 @@
 import "./globals.css";
 import { NextAuthProvider } from "./providers";
-import '@rainbow-me/rainbowkit/styles.css';
 
 // const metadata = {
 //   title: "Create Next App",

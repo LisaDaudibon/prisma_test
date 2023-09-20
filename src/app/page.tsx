@@ -2,6 +2,7 @@ import Header from "@/components/header.components";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import '@rainbow-me/rainbowkit/styles.css';
 
 export default async function Home() {
   // const session = getServerSession(context.req, context.res, authOptions)
