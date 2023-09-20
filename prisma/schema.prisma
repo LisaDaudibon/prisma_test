@@ -15,7 +15,7 @@ datasource db {
 model Guild {
   id             Int    @id @default(autoincrement())
   name           String @unique
-  discordUrl     String? @unique
+  discordUrl     String?
   tag            String?
   members        Player[] @relation("memberOfGuild")
   discordGuild   DiscordGuild?
@@ -137,11 +137,11 @@ model User {
   emailVerified    DateTime?   @map("email_verified")
   image            String?
   discriminator    String?
-  global_name      String?     @unique
+  global_name      String?
   verified         Boolean?    @default(false)
   mfa_enabled      Boolean?    @default(false)
   banner           String?
-  publicAddress    String?     @unique // Added to enable crypto authentication
+  // publicAddress    String?     @unique // Added to enable crypto authentication
   createdAt        DateTime    @default(now())
   updatedAt        DateTime    @updatedAt
   accounts         Account[]
@@ -149,8 +149,8 @@ model User {
   player           Player?     @relation (fields:[playerName], references: [name])
   playerName       String?     @unique
   discordGuild     DiscordGuild[]
-  activity         Activity[]
-  cryptoLoginNonce CryptoLoginNonce?
+  // activity         Activity[]
+  // cryptoLoginNonce CryptoLoginNonce?
 
   @@map("users")
 }
@@ -201,9 +201,8 @@ model VerificationRequest {
 }
 
 model DiscordGuild{
-  id                              Int   @id @default(autoincrement())
-  discordGuildId                  String   @unique
-  discordGuildName                String   @unique
+  id                              String   @id
+  name                            String   @unique
   guildName                       String?  @unique
   icon                            String?
   ownerId                         String?
@@ -228,10 +227,10 @@ model Activity {
   friendSync             Boolean     @default(false) @map("friend_sync")
   twoWayLink             Boolean     @default(false) @map("two_way_link")
   typeName               String?
-  userGlobalName         String?      @map("user_global_name")
+  // userEmail              String?      @map("user_email")
   createdAt              DateTime    @default(now())
   updatedAt              DateTime    @updatedAt
-  user                   User?        @relation( fields: [userGlobalName], references: [global_name])
+  // user                   User?        @relation( fields: [userEmail], references: [email])
   type                   Type?        @relation( fields: [typeName], references: [name])
 
   @@map("activities")
@@ -244,9 +243,9 @@ model Type {
   @@map("types")
 }
 
-model CryptoLoginNonce {
-  userId  String   @unique
-  nonce   String
-  expires DateTime
-  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
+// model CryptoLoginNonce {
+//   userId  String   @unique
+//   nonce   String
+//   expires DateTime
+//   user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+// }
