@@ -6,6 +6,7 @@ import { updateActivityData } from "../api/discord/fetchActivityFromUser";
 import { prisma } from "@/lib/prisma";
 import { differenceInDays } from "date-fns";
 
+
 export default async function Profile() {
   const session = await getServerSession(authOptions);
   const user = session?.user;
@@ -36,7 +37,6 @@ export default async function Profile() {
   } else if (
     userWithGuilds.discordGuild.some((guild) => {
       const daysDifference = differenceInDays(new Date(), guild.updatedAt);
-      console.log(daysDifference)
       return daysDifference > 7;
     })
   ) {
