@@ -28,7 +28,7 @@ export async function updateGuildData(session: any) {
         // Upsert the DiscordGuild
         const discordGuild = await prisma.discordGuild.upsert({
           where: {
-            discordGuildName: guild.name,
+            name: guild.name,
           },
           update: {
             approximate_number_count: guild.approximate_member_count,
@@ -36,8 +36,8 @@ export async function updateGuildData(session: any) {
             updatedAt: new Date(),
           },
           create: {
-            discordGuildId: guild.id,
-            discordGuildName: guild.name,
+            id: guild.id,
+            name: guild.name,
             icon: guild.icon,
             ownerId: guild.owner_id,
             approximate_number_count: guild.approximate_member_count,
@@ -49,12 +49,12 @@ export async function updateGuildData(session: any) {
         });
 
         // Link the DiscordGuild to the User
-        if (session?.user.global_name) {
+        if (session?.user.email) {
           await prisma.user.update({
-            where: { global_name: session.user.global_name },
+            where: { email: session.user.email },
             data: {
               discordGuild: {
-                connect: { discordGuildName: discordGuild.discordGuildName },
+                connect: { name: discordGuild.name },
               },
             },
           });
