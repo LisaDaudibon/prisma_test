@@ -1,16 +1,15 @@
 import { prisma } from "@/lib/prisma";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { DiscordGuild } from "@prisma/client";
-
 import type { NextAuthOptions } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
-  pages: {
-    signIn: "/login",
-  },
+  // pages: {
+  //   signIn: "/login",
+  // },
   session: {
     strategy: "jwt",
   },
@@ -46,6 +45,11 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
+    async redirect({ url, baseUrl }) {
+      if (url.startsWith("/")) return `${baseUrl}${url}`
+
+    return baseUrl
+    },
     session: ({ session, token }) => {
       return {
         ...session,
