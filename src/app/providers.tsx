@@ -64,6 +64,7 @@ const wagmiConfig = createConfig({
   publicClient,
   webSocketPublicClient,
 });
+
 type Props = {
   children?: React.ReactNode;
 };
